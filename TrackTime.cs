@@ -6,23 +6,24 @@ namespace Sandbox
 {
     public class TrackTime : IDisposable
     {
-        Stopwatch sw = Stopwatch.StartNew ();
-
+        protected virtual Stopwatch Watch { get; } = new Stopwatch();
         string caller;
 
-        TrackTime (string caller)
+        TrackTime(string caller)
         {
             this.caller = caller;
+            Watch.Start();
         }
 
-        public void Dispose ()
+        public void Dispose()
         {
-            Console.WriteLine ($"{caller} takes {sw.ElapsedMilliseconds} ms.");
+            Watch.Stop();
+            Console.WriteLine($"{caller} takes {Watch.ElapsedMilliseconds} ms.");
         }
 
-        public static IDisposable Create ([CallerMemberName]string caller = null)
+        public static IDisposable Create([CallerMemberName]string caller = null)
         {
-            return new TrackTime (caller);
+            return new TrackTime(caller);
         }
     }
 }
