@@ -15,10 +15,14 @@ namespace Sandbox
             Watch.Start();
         }
 
+        public override string ToString() {
+            return $"{caller} takes {Watch.ElapsedMilliseconds} ms.";
+        }
+
         public void Dispose()
         {
             Watch.Stop();
-            Console.WriteLine($"{caller} takes {Watch.ElapsedMilliseconds} ms.");
+            Console.WriteLine(this);
         }
 
         public static IDisposable Create([CallerMemberName]string caller = null)
